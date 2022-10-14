@@ -30,28 +30,28 @@ class Memory {
     
     get(index) {
         if (typeof(index) == 'string' && this.variableToIndex.hasOwnProperty(index)) {
-            index = this.variableToIndex[index]
+            index = parseInt(this.variableToIndex[index])
         }
         
-        if (typeof(index) != 'number' || index < 0 || index >= size) {
+        if (typeof(index) != 'number' || index < 0 || index >= this.size) {
             console.error(`无效的下标${index}`)
             return undefined
         }
         
-        return this.datas[index]
+        return this.values[index]
     }
     
     set(index, value) {
         if (typeof(index) == 'string' && this.variableToIndex.hasOwnProperty(index)) {
-            index = this.variableToIndex[index]
+            index = parseInt(this.variableToIndex[index])
         }
         
-        if (typeof(index) != 'number' || index < 0 || index >= size) {
+        if (typeof(index) != 'number' || index < 0 || index >= this.size) {
             console.error(`无效的下标${index}`)
             return undefined
         }
         
-        this.datas[index] = value
+        this.values[index] = value
     }
 }
 
