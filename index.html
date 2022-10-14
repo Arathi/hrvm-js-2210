@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Human Resource Virtual Machine</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-plus@2.2.18/dist/index.css" />
+        <link rel="stylesheet" href="css/hrm.css" />
+    </head>
+    <body>
+        <div id="app">
+            <el-row>
+                <el-col :span="left">输入：</el-col>
+                <el-col :span="24 - left" class="data-line">
+                    <template v-for="v in input">
+                        <div class="data-block data-block-int" v-if="typeof(v) == 'number'">
+                            {{ v }}
+                        </div>
+                        <div class="data-block data-block-char" v-if="typeof(v) == 'string'">
+                            {{ v }}
+                        </div>
+                    </template>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="left">输出：</el-col>
+                <el-col :span="24 - left" class="data-line">
+                    <template v-for="v in output">
+                        <div class="data-block data-block-int" v-if="typeof(v) == 'number'">
+                            {{ v }}
+                        </div>
+                        <div class="data-block data-block-char" v-if="typeof(v) == 'string'">
+                            {{ v }}
+                        </div>
+                    </template>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="left">累加器：</el-col>
+                <el-col :span="24 - left" class="data-line">
+                    <template v-if="acc != undefined">
+                        <div class="data-block data-block-int" v-if="typeof(acc) == 'number'">
+                            {{ acc }}
+                        </div>
+                        <div class="data-block data-block-char" v-if="typeof(acc) == 'string'">
+                            {{ acc }}
+                        </div>
+                    </template>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="left">内存：</el-col>
+                <el-col :span="24 - left">
+                    <div class="memory">
+                        <div class="memory-grid">
+                            <div v-for="(v, i) in memory.values" class="memory-block">
+                                <div class="data-block data-block-int" v-if="typeof(v) == 'number'">
+                                    {{ v }}
+                                </div>
+                                <div class="data-block data-block-char" v-if="typeof(v) == 'string'">
+                                    {{ v }}
+                                </div>
+                                <div class="memory-variable">
+                                    {{ memory.indexToVariable[i] }}
+                                </div>
+                                <div class="memory-index">
+                                    {{ i }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="left">操作：</el-col>
+                <el-col :span="24 - left">
+                    <el-button type="primary" @click="run">运行</el-button>
+                    <el-button @click="getInstructionAndStep">单步执行</el-button>
+                    <span style="padding-left: 8px;">
+                        状态：
+                        <span v-if="status == 0">
+                            <el-tag>等待中</el-tag>
+                        </span>
+                        <span v-if="status == 1">
+                            <el-tag type="success">运行中</el-tag>
+                        </span>
+                        <span v-if="status == 2">
+                            <el-tag type="info">已暂停</el-tag>
+                        </span>
+                        <span v-if="status == 3">
+                            <el-tag type="danger">已停止</el-tag>
+                        </span>
+                    </span>
+                    <span style="padding-left: 8px;">已执行步数：{{ counter }}</span>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="left">代码：</el-col>
+                <el-col :span="24 - left">
+                    <div class="codes">
+                        <el-row>
+                            <el-col :span="1"></el-col>
+                            <el-col :span="3">index</el-col>
+                            <el-col :span="4">label</el-col>
+                            <el-col :span="4">opercode</el-col>
+                            <el-col :span="4">operand</el-col>
+                        </el-row>
+                        <template v-for="(inst, i) in instructions">
+                        <el-row>
+                            <el-col :span="1">
+                                <span v-if="pc == i">></span>
+                            </el-col>
+                            <el-col :span="3">{{ i }}</el-col>
+                            <el-col :span="4">
+                                <span v-if="inst.labels != undefined && inst.labels.length > 0">
+                                    {{ inst.labels[0] }}:
+                                </span>
+                            </el-col>
+                            <el-col :span="4">{{ inst.opercode }}</el-col>
+                            <el-col :span="4">{{ inst.operand }}</el-col>
+                        </el-row>
+                        </template>
+                    </div>
+                </el-col>
+            </el-row>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@3.2.40/dist/vue.global.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/element-plus@2.2.18/dist/index.full.js"></script>
+        <script src="js/hrvm.js"></script>
+        <script src="js/ui.js"></script>
+    </body>
+</html>

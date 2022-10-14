@@ -1,0 +1,63 @@
+.data-line {
+    display: flex;
+    height: 48px;
+}
+
+.data-block {
+    display: flex;
+    white-space: nowrap;
+    width: 32px;
+    height: 32px;
+    margin: 4px;
+    color: #3D3D56;
+    justify-content: center;
+    align-items: center;
+    font-size: larger;
+}
+
+.data-block-int {
+    background-color: #8E8FC1;
+}
+
+.data-block-char {
+    background-color: #A1CC5F;
+}
+
+.memory {
+    display: block;
+    width: 480px;
+}
+
+.memory-grid {
+    display: flex;
+}
+
+.memory-block {
+    display: flex;
+    white-space: nowrap;
+    position: relative;
+    background-color: #cccccc;
+    width: 64px;
+    height: 64px;
+    margin: 4px;
+    justify-content: center;
+}
+
+.memory-index {
+    position: absolute;
+    right: 3px;
+    bottom: 0px;
+    color: #715138;
+    font-size: xx-small;
+}
+
+.memory-variable {
+    position: absolute;
+    left: 3px;
+    bottom: 4px;
+}
+
+.codes {
+    display: block;
+    width: 480px;
+}
